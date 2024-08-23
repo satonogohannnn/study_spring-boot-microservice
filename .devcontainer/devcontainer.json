@@ -19,6 +19,7 @@
     "fosshaas.fontsize-shortcuts",
     "vscjava.vscode-java-pack",
     "vscjava.vscode-spring-initializr",
-    "vscjava.vscode-gradle"
+    "vscjava.vscode-gradle",
+    "rangav.vscode-thunder-client"
   ]
 }
