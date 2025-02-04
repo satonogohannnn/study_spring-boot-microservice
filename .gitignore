@@ -3,3 +3,4 @@
 .docker
 .gradle
 build
+.env*

@@ -2,7 +2,6 @@ package com.example.author_api.Controllers;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,41 +16,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.author_api.dtos.AuthorDto;
+import com.example.author_api.dtos.CreateAuthorDto;
+import com.example.author_api.dtos.UpdatedAuthorDto;
+import com.example.author_api.services.AuthorService;
+
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(path = AuthorController.BASE_URL)
+@RequiredArgsConstructor
 public class AuthorController {
     
     public static final String BASE_URL = "/api/v1/authors";
 
+    private final AuthorService _authorService;
+
     @GetMapping("")
-    public ResponseEntity<List<String>> getAuthors() {
-        return ResponseEntity.ok(new ArrayList<String>(Arrays.asList("author 1", "author 2", "author 3")));
+    public ResponseEntity<List<AuthorDto>> getAuthors() {
+        return ResponseEntity.ok(new ArrayList<AuthorDto>(_authorService.getAuthors()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getAuthor(@PathVariable UUID id) {
-        return ResponseEntity.ok("author 1");
+    public ResponseEntity<AuthorDto> getAuthor(@PathVariable UUID id) {
+        return ResponseEntity.ok(_authorService.getAuthor(id));
     }
 
     @PostMapping("")
-    public ResponseEntity<String> createAuthor(@Valid @RequestBody Object dto) {
-        String newAuthor = "author 1";
+    public ResponseEntity<AuthorDto> createAuthor(@Valid @RequestBody CreateAuthorDto dto) {
+        AuthorDto newAuthor = _authorService.createAuthor(dto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-            .buildAndExpand(UUID.randomUUID()).toUri();
+            .buildAndExpand(newAuthor.getId()).toUri();
 
         return ResponseEntity.created(location).body(newAuthor);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAuthor(@PathVariable UUID id) {
+        _authorService.deleteAuthor(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Object> updateAuthor(@PathVariable UUID id, @Valid @RequestBody Object dto) {
+    public ResponseEntity<Object> updateAuthor(@PathVariable UUID id, @Valid @RequestBody UpdatedAuthorDto dto) {
+        _authorService.updateAuthor(dto, id);
         return ResponseEntity.noContent().build();
     }
 }
