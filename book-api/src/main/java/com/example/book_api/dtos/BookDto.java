@@ -1,4 +1,4 @@
-package com.example.author_api.dtos;
+package com.example.book_api.dtos;
 
 import com.example.shared.DtoBase;
 
@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@EqualsAndHashCode(callSuper=true)
-@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorDto extends DtoBase {
-    
-    private String name;
+@SuperBuilder
+@EqualsAndHashCode(callSuper=true)
+public class BookDto extends DtoBase {
+
+    private String title;
     private String description;
 }

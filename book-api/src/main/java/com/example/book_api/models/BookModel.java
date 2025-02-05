@@ -1,4 +1,4 @@
-package com.example.author_api.models;
+package com.example.book_api.models;
 
 import com.example.shared.EntityBase;
 
@@ -11,15 +11,14 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true)
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
-public class AuthorModel extends EntityBase {
-
-    @Column(name = "name", nullable = false)
-    private String name;
+@AllArgsConstructor
+public class BookModel extends EntityBase {
+    
+    @Column(name = "title", nullable = false)
+    private String title;
 
     @Column(name = "description", nullable = false)
     private String description;
-
 }
